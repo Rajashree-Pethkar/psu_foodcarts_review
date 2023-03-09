@@ -16,7 +16,8 @@ let User = class User extends BaseEntity {
     id;
     name;
     email;
-    badwords;
+    password;
+    dob;
     created_at;
     updated_at;
 };
@@ -27,20 +28,22 @@ __decorate([
 __decorate([
     Column({
         length: 100,
-        type: "varchar"
+        type: "varchar",
     }),
     __metadata("design:type", String)
 ], User.prototype, "name", void 0);
 __decorate([
-    Column('text'),
+    Column("text"),
     __metadata("design:type", String)
 ], User.prototype, "email", void 0);
 __decorate([
-    Column({
-        default: 0
-    }),
-    __metadata("design:type", Number)
-], User.prototype, "badwords", void 0);
+    Column(),
+    __metadata("design:type", String)
+], User.prototype, "password", void 0);
+__decorate([
+    Column(),
+    __metadata("design:type", Date)
+], User.prototype, "dob", void 0);
 __decorate([
     CreateDateColumn(),
     __metadata("design:type", String)

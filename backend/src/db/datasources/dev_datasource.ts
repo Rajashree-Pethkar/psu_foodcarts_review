@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import { DataSource } from 'typeorm';
 // Similar reasoning as above, we need to add the file extensions to this file's imports for CLI usage
 import { User } from "../models/user";
-import { users1678311626144 } from "../migrations/1678311626144-users.js";
+import { users1678343630301 } from "../migrations/1678343630301-users.js";
 
 dotenv.config();
 
@@ -22,7 +22,7 @@ export const AppDataSource = new DataSource({
         User
     ],
     migrations: [
-        users1678311626144
+        users1678343630301
     ],
     // DANGER DANGER our convenience will nuke production data!
     synchronize: false

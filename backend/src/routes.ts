@@ -37,6 +37,8 @@ export async function psu_foodcarts_routes(app: FastifyInstance): Promise<void> 
 				id: true,
 				name: true,
 				email: true,
+				dob: true,
+				password: false,
 				updated_at: true,
 				created_at: false,
 			},
@@ -61,9 +63,5 @@ export type IPostUsersResponse = {
 	/**
 	 * User created by request
 	 */
-	user: User,
-	/**
-	 * IP Address user used to create account
-	 */
-	ip_address: string
+	user: User
 }
