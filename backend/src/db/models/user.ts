@@ -9,6 +9,7 @@ import {
 	Relation,
 	UpdateDateColumn
 } from "typeorm";
+import { ReviewReactions } from "./reviewreactions";
 import { Reviews } from "./reviews";
 
 /**
@@ -37,6 +38,10 @@ export class User extends BaseEntity {
   // Reviews
   @OneToMany((type) => Reviews, (r: Reviews) => r.user)
   reviews: Relation<Reviews[]>;
+
+  // Reviews
+  @OneToMany((type) => ReviewReactions, (r: ReviewReactions) => r.user)
+  reviewreactions: Relation<ReviewReactions[]>;
 
   @CreateDateColumn()
   created_at: string;

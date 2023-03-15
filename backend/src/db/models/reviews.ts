@@ -13,6 +13,7 @@ import {
 } from "typeorm";
 import { FoodCarts } from "./foodcarts";
 import { ReviewImages } from "./reviewimages";
+import { ReviewReactions } from "./reviewreactions";
 import { User } from "./user";
 
 /**
@@ -44,6 +45,10 @@ export class Reviews extends BaseEntity {
   // Review Images
   @OneToMany((type) => ReviewImages, (r: ReviewImages) => r.review)
   reviewimages: Relation<ReviewImages[]>;
+
+  // Review Reactions
+  @OneToMany((type) => ReviewReactions, (r: ReviewReactions) => r.review)
+  reviewreactions: Relation<ReviewReactions[]>;
 
   @CreateDateColumn()
   created_at: string;
