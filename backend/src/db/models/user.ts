@@ -4,9 +4,12 @@ import {
 	Column,
 	CreateDateColumn,
 	Entity,
+	OneToMany,
 	PrimaryGeneratedColumn,
+	Relation,
 	UpdateDateColumn
 } from "typeorm";
+import { Reviews } from "./reviews";
 
 /**
  *  Class representing user table
@@ -30,6 +33,10 @@ export class User extends BaseEntity {
 
   @Column()
   dob: Date;
+
+  // Reviews
+  @OneToMany((type) => Reviews, (r: Reviews) => r.user)
+  reviews: Relation<Reviews[]>;
 
   @CreateDateColumn()
   created_at: string;
