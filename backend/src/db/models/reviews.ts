@@ -6,11 +6,13 @@ import {
   Entity,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   Relation,
   UpdateDateColumn,
 } from "typeorm";
 import { FoodCarts } from "./foodcarts";
+import { ReviewImages } from "./reviewimages";
 import { User } from "./user";
 
 /**
@@ -37,7 +39,11 @@ export class Reviews extends BaseEntity {
     cascade: true,
     onDelete: "CASCADE",
   })
-  foodcart: Relation<User>;
+  foodcart: Relation<FoodCarts>;
+
+  // Review Images
+  @OneToMany((type) => ReviewImages, (r: ReviewImages) => r.review)
+  reviewimages: Relation<ReviewImages[]>;
 
   @CreateDateColumn()
   created_at: string;
