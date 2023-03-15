@@ -1,4 +1,4 @@
-/** @module Models/User */
+/** @module Models/Reviews */
 import {
   BaseEntity,
   Column,
@@ -10,12 +10,13 @@ import {
   Relation,
   UpdateDateColumn,
 } from "typeorm";
+import { FoodCarts } from "./foodcarts";
 import { User } from "./user";
 
 /**
- *  Class representing user table
+ *  Class representing reviews table
  */
-@Entity({ name: "users" })
+@Entity({ name: "reviews" })
 export class Reviews extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -31,6 +32,12 @@ export class Reviews extends BaseEntity {
     onDelete: "CASCADE",
   })
   user: Relation<User>;
+
+  @ManyToOne((type) => FoodCarts, (fc: FoodCarts) => fc.reviews, {
+    cascade: true,
+    onDelete: "CASCADE",
+  })
+  foodcart: Relation<User>;
 
   @CreateDateColumn()
   created_at: string;
