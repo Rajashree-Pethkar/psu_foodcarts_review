@@ -2,13 +2,14 @@
 import {User} from "../models/user";
 import {Seeder} from "../../lib/seed_manager";
 import {FastifyInstance} from "fastify";
+import {hashSync} from "bcrypt";
 
 /**
  * UserSeeder class - Model class for interacting with "users" table
  */
 export class UserSeeder extends Seeder {
 	/**
-	 * Runs the IPHistory table's seed
+	 * Runs the User table's seed
 	 * @function
 	 * @param {FastifyInstance} app
 	 * @returns {Promise<void>}
@@ -21,13 +22,20 @@ export class UserSeeder extends Seeder {
 		await app.db.user.delete({});
 
 		for (let i = 0; i < 10; i++) {
-			let user = new User();
-			user.name = "user" + i;
-			user.email = "user" + i + "@email.com";
-			user.dob = new Date();
-			user.password = "test";
-			await user.save();
-			app.log.info("Seeded user " + i);
+		let user = new User();
+		user.name = "user" + i;
+		user.email = "user" + i + "@email.com";
+		user.dob = new Date();
+		let password = "test";
+		// if we're in dev mode and pw isn't already bcrypt encrypted, do so now for convenience
+		if (import.meta.env.DEV) {
+			if (!password.startsWith("$2a$")) {
+				password = hashSync(password, 2);
+			}
+		}
+		user.password = password;
+		await user.save();
+		app.log.info("Seeded user " + i);
 		}
 	}
 }

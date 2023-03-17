@@ -7,67 +7,67 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-/** @module Models/User */
-import { BaseEntity, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { ReviewReactions } from "./reviewreactions.js";
+/** @module Models/FoodCarts */
+import { BaseEntity, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn, } from "typeorm";
 import { Reviews } from "./reviews.js";
 /**
- *  Class representing user table
+ *  Class representing food carts table
  */
-let User = class User extends BaseEntity {
+let FoodCarts = class FoodCarts extends BaseEntity {
     id;
     name;
-    email;
-    password;
-    dob;
+    hours;
+    about;
+    image;
+    category;
+    rating;
     // Reviews
     reviews;
-    // Reviews
-    reviewreactions;
     created_at;
     updated_at;
 };
 __decorate([
     PrimaryGeneratedColumn(),
     __metadata("design:type", Number)
-], User.prototype, "id", void 0);
-__decorate([
-    Column({
-        length: 100,
-        type: "varchar",
-    }),
-    __metadata("design:type", String)
-], User.prototype, "name", void 0);
-__decorate([
-    Column("text"),
-    __metadata("design:type", String)
-], User.prototype, "email", void 0);
+], FoodCarts.prototype, "id", void 0);
 __decorate([
     Column(),
     __metadata("design:type", String)
-], User.prototype, "password", void 0);
+], FoodCarts.prototype, "name", void 0);
 __decorate([
     Column(),
-    __metadata("design:type", Date)
-], User.prototype, "dob", void 0);
+    __metadata("design:type", String)
+], FoodCarts.prototype, "hours", void 0);
 __decorate([
-    OneToMany((type) => Reviews, (r) => r.user),
-    __metadata("design:type", Object)
-], User.prototype, "reviews", void 0);
+    Column(),
+    __metadata("design:type", String)
+], FoodCarts.prototype, "about", void 0);
 __decorate([
-    OneToMany((type) => ReviewReactions, (r) => r.user),
+    Column(),
+    __metadata("design:type", String)
+], FoodCarts.prototype, "image", void 0);
+__decorate([
+    Column(),
+    __metadata("design:type", String)
+], FoodCarts.prototype, "category", void 0);
+__decorate([
+    Column(),
+    __metadata("design:type", String)
+], FoodCarts.prototype, "rating", void 0);
+__decorate([
+    OneToMany((type) => Reviews, (r) => r.foodcart),
     __metadata("design:type", Object)
-], User.prototype, "reviewreactions", void 0);
+], FoodCarts.prototype, "reviews", void 0);
 __decorate([
     CreateDateColumn(),
     __metadata("design:type", String)
-], User.prototype, "created_at", void 0);
+], FoodCarts.prototype, "created_at", void 0);
 __decorate([
     UpdateDateColumn(),
     __metadata("design:type", String)
-], User.prototype, "updated_at", void 0);
-User = __decorate([
-    Entity({ name: "users" })
-], User);
-export { User };
-//# sourceMappingURL=user.js.map
+], FoodCarts.prototype, "updated_at", void 0);
+FoodCarts = __decorate([
+    Entity({ name: "foodcarts" })
+], FoodCarts);
+export { FoodCarts };
+//# sourceMappingURL=foodcarts.js.map

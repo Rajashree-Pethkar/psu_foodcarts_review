@@ -39,7 +39,7 @@ export class FoodCarts extends BaseEntity {
   category: string;
 
   @Column()
-  rating: Double;
+  rating: string;
 
   // Reviews
   @OneToMany((type) => Reviews, (r: Reviews) => r.foodcart)

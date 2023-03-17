@@ -1,12 +1,13 @@
 /** @module Seeds/User */
 import { User } from "../models/user.js";
 import { Seeder } from "../../lib/seed_manager.js";
+import { hashSync } from "bcrypt";
 /**
  * UserSeeder class - Model class for interacting with "users" table
  */
 export class UserSeeder extends Seeder {
     /**
-     * Runs the IPHistory table's seed
+     * Runs the User table's seed
      * @function
      * @param {FastifyInstance} app
      * @returns {Promise<void>}
@@ -22,7 +23,14 @@ export class UserSeeder extends Seeder {
             user.name = "user" + i;
             user.email = "user" + i + "@email.com";
             user.dob = new Date();
-            user.password = "test";
+            let password = "test";
+            // if we're in dev mode and pw isn't already bcrypt encrypted, do so now for convenience
+            if (import.meta.env.DEV) {
+                if (!password.startsWith("$2a$")) {
+                    password = hashSync(password, 2);
+                }
+            }
+            user.password = password;
             await user.save();
             app.log.info("Seeded user " + i);
         }

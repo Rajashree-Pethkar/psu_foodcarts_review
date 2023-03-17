@@ -30,11 +30,11 @@ export async function psu_foodcarts_routes(app) {
                 id: true,
                 name: true,
                 email: true,
+                dob: true,
+                password: false,
                 updated_at: true,
                 created_at: false,
-            },
-            // This defines which of our OneToMany/ManyToMany relations we want to return along with each user
-            relations: {}
+            }
         });
         reply.send(users);
     });

@@ -5,6 +5,8 @@ import {DataSource, Repository} from "typeorm";
 import {User} from "../db/models/user";
 import {FastifyInstance, FastifyPluginOptions} from "fastify";
 import {AppDataSource} from "../db/datasources/dev_datasource";
+import { Reviews } from "../db/models/reviews";
+import { FoodCarts } from "../db/models/foodcarts";
 
 
 /** This is AWESOME - we're telling typescript we're adding our own "thing" to base 'app', so we get FULL IDE/TS support */
@@ -23,8 +25,10 @@ declare module 'fastify' {
 }
 
 interface DBConfigOpts {
-	user: Repository<User>
-	connection: DataSource,
+  user: Repository<User>;
+  foodcarts: Repository<FoodCarts>;
+  reviews: Repository<Reviews>;
+  connection: DataSource;
 }
 
 /**
@@ -42,9 +46,11 @@ const DbPlugin = fp(async (app: FastifyInstance, options: FastifyPluginOptions, 
 	// app.status(200).send()
 	// app.db.user
 	app.decorate("db", {
-		connection: dataSourceConnection,
-		user: dataSourceConnection.getRepository(User)
-	});
+    connection: dataSourceConnection,
+    user: dataSourceConnection.getRepository(User),
+    foodcarts: dataSourceConnection.getRepository(FoodCarts),
+    reviews: dataSourceConnection.getRepository(Reviews),
+  });
 
 	done();
 }, {
