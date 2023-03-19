@@ -3,7 +3,8 @@ import cors from "cors";
 import {FastifyInstance, FastifyReply, FastifyRequest, RouteShorthandOptions} from "fastify";
 import {User} from "./db/models/user";
 import {readFileSync} from "node:fs";
-import { hashSync } from "bcrypt";
+import { FoodCarts } from "./db/models/foodcarts";
+import { UploadFileToMinio } from "lib/minio";
 
 /**
  * App plugin where we construct our routes
@@ -47,7 +48,7 @@ export async function psu_foodcarts_routes(app: FastifyInstance): Promise<void> 
         200: {
           type: "object",
           properties: {
-            user: { type: "object" }
+            user: { type: "object" },
           },
         },
       },
@@ -62,38 +63,32 @@ export async function psu_foodcarts_routes(app: FastifyInstance): Promise<void> 
    * @param {string} email - user's email address
    * @returns {IPostUsersResponse} user used to create account
    */
-	app.post<{
-		Body: {
-			name: string;
-			email: string;
-			password: string;
-			dob: Date;
-		};
-		Reply: IPostUsersResponse;
-	}>("/users", post_users_opts, async (req, reply: FastifyReply) => {
-		const { name, email, dob } = req.body;
+  app.post<{
+    Body: {
+      name: string;
+      email: string;
+      password: string;
+      dob: Date;
+    };
+    Reply: IPostUsersResponse;
+  }>("/users", post_users_opts, async (req, reply: FastifyReply) => {
+    const { name, email, dob } = req.body;
 
-		let { password } = req.body;
+    let { password } = req.body;
 
-		// if we're in dev mode and pw isn't already bcrypt encrypted, do so now for convenience
-		if (import.meta.env.DEV) {
-			if (!password.startsWith("$2a$")) {
-				password = hashSync(password, 2);
-			}
-		}
 
-		const user = new User();
-		user.name = name;
-		user.email = email;
-		user.password = password;
-		user.dob = dob;
+    const user = new User();
+    user.name = name;
+    user.email = email;
+    user.password = password;
+    user.dob = dob;
 
-		await app.db.user.save(user);
+    await app.db.user.save(user);
 
-		//manually JSON stringify due to fastify bug with validation
-		// https://github.com/fastify/fastify/issues/4017
-		await reply.send(JSON.stringify({ user }));
-	});
+    //manually JSON stringify due to fastify bug with validation
+    // https://github.com/fastify/fastify/issues/4017
+    await reply.send(JSON.stringify({ user }));
+  });
 
   /**
    * Route serving food carts form.
@@ -118,6 +113,44 @@ export async function psu_foodcarts_routes(app: FastifyInstance): Promise<void> 
       reply.send(fc);
     }
   );
+
+  /**
+   * Route allowing creation of a new user.
+   * @name post/foodcarts
+   * @function
+   * @param {string} name - food carts name
+   * @param {string} hours - hours
+   * @param {string} about - about the food cart
+   * @param {string} category - food category
+   * @param {string} rating - food rating
+   */
+  app.post<{
+    Body: {
+      name: string;
+      hours: string;
+      about: string;
+      category: string;
+    };
+    Reply: IPostUsersResponse;
+  }>("/foodcarts", async (req: any, reply: FastifyReply) => {
+    const { name, hours, about, category } = req.body;
+
+    // Get file from request
+    const data = await req.file();
+    let upload = await UploadFileToMinio(data);
+
+    const foodcart = new FoodCarts();
+    foodcart.name = name;
+    foodcart.hours = hours;
+    foodcart.about = about;
+    foodcart.category = category;
+
+    await app.db.user.save(foodcart);
+
+    //manually JSON stringify due to fastify bug with validation
+    // https://github.com/fastify/fastify/issues/4017
+    await reply.send(JSON.stringify({ foodcart }));
+  });
 }
 
 /**

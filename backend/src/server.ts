@@ -3,12 +3,15 @@
 // This will let us use our basic middlewares now, then transition to hooks later
 import fastifyMiddie from "@fastify/middie";
 import staticFiles from "@fastify/static";
-import Fastify, {FastifyInstance} from "fastify";
+import Fastify, { FastifyInstance } from "fastify";
 import path from "path";
-import {getDirName} from "./lib/helpers";
+import { getDirName } from "./lib/helpers";
 import logger from "./lib/logger";
-import {psu_foodcarts_routes} from "./routes";
+import { psu_foodcarts_routes } from "./routes";
 import DbPlugin from "./plugins/database";
+import cors from "@fastify/cors";
+import dotenv from "dotenv";
+dotenv.config();
 
 
 
@@ -30,6 +33,12 @@ export async function buildApp(useLogging: boolean) {
 		// add express-like 'app.use' middleware support
 		await app.register(fastifyMiddie);
 
+		await app.register(cors, {
+			origin: (origin, cb) => {
+				cb(null, true);
+			},
+		});
+		
 		// add static file handling
 		await app.register(staticFiles, {
 			root: path.join(getDirName(import.meta), "../public"),

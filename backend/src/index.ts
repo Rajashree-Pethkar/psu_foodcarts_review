@@ -4,8 +4,6 @@ import SeedManager from "./lib/seed_manager";
 import SeederOptions from "./db/seeds/seeder_options";
 import {getModeFromArgs, RunMode} from "./lib/helpers";
 
-
-
 /**
  * Constructs Fastify instance
  * @param {boolean} useLogging whether to log the server or not
