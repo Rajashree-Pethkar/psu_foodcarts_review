@@ -76,7 +76,6 @@ export async function psu_foodcarts_routes(app: FastifyInstance): Promise<void> 
 
     let { password } = req.body;
 
-
     const user = new User();
     user.name = name;
     user.email = email;
@@ -151,6 +150,30 @@ export async function psu_foodcarts_routes(app: FastifyInstance): Promise<void> 
     // https://github.com/fastify/fastify/issues/4017
     await reply.send(JSON.stringify({ foodcart }));
   });
+
+  /**
+   * Route to get all reviews.
+   * @name get/reviews
+   * @function
+   */
+  app.get(
+    "/reviews",
+    async (request: FastifyRequest, reply: FastifyReply) => {
+      let reviews = await app.db.reviews.find({
+        select: {
+          id: true,
+          text: true,
+          rating: true,
+          updated_at: true,
+          created_at: false,
+        },
+        relations: {
+          foodcart: true
+        }
+      });
+      reply.send(reviews);
+    }
+  );
 }
 
 /**

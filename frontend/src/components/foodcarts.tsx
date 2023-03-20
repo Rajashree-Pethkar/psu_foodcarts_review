@@ -5,10 +5,12 @@ import axios from "axios";
 const FoodCarts = () => {
   const { isAuthenticated } = useAuth0();
   const [carts, foodcarts] = useState();
+  const [foodcartreviews] = useState();
 
   return (<>
     <FoodCart foodcarts={carts}/>
     <GetAllFoodCarts foodcarts={foodcarts}/>
+    <GetAllReviews foodcartreviews={foodcartreviews}/>
   </>)
 };
 
@@ -31,6 +33,21 @@ function GetAllFoodCarts({foodcarts}){
             foodcarts(carts.data);
         };
         getCarts()
+			.catch(console.error);
+      }, []);
+      return (
+      <></>
+      );
+}
+
+function GetAllReviews({foodcartreviews}){
+  //const [users, setUsers] = useState([]);
+      useEffect(() => {
+        const getAllReviews = async () => {
+            const reviews = await axios.get("http://localhost:5000");
+            foodcartreviews(reviews.data);
+        };
+        getAllReviews()
 			.catch(console.error);
       }, []);
       return (
