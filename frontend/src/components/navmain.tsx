@@ -18,11 +18,10 @@ export function NavMain() {
 function NavView() {
     const { isAuthenticated } = useAuth0();
     return (
-		<nav>
-			<div className="menu">
+		<nav className="navbar navbar-expand-lg navbar-light bg-light">
+			<div className="navbar-nav">
 				<PublicLinksView/>
 				{
-                    //<><AuthLinksView /><NoAuthLinksView /></>
 					isAuthenticated ? <AuthLinksView /> : <NoAuthLinksView />
 				}
 			</div>
@@ -49,9 +48,11 @@ function AuthLinksView() {
 }
 
 function NoAuthLinksView() {
+	const { loginWithRedirect } = useAuth0();
+
 	return (
 		<>
-			<Link to="/login">Login</Link>
+			<Link to="" onClick={() => loginWithRedirect()}>Login</Link>
 		</>
 	)
 }

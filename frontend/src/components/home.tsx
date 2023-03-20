@@ -1,10 +1,8 @@
-import { useAuth0 } from "@auth0/auth0-react";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 export default function Home() {
-  const { isAuthenticated, user } = useAuth0();
-  console.log(isAuthenticated);
-  console.log(user);
-  return (<div>
+  return (<div className='h-100 d-flex flex-column justify-content-center'>
       <Title/>
       <Subtitle/>
     </div>
@@ -12,9 +10,9 @@ export default function Home() {
 }
 
 export function Title() {
-  return (<h1>PSU food carts</h1>)
+  return (<div className='h1'>Welcome!</div>)
 }
 
 export function Subtitle() {
-  return (<h3>PSU food carts review</h3>)
+  return (<div className='h3'>PSU food carts review</div>)
 }

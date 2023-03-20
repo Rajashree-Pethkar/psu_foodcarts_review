@@ -4,7 +4,6 @@ import {FastifyInstance, FastifyReply, FastifyRequest, RouteShorthandOptions} fr
 import {User} from "./db/models/user";
 import {readFileSync} from "node:fs";
 import { FoodCarts } from "./db/models/foodcarts";
-import { UploadFileToMinio } from "lib/minio";
 
 /**
  * App plugin where we construct our routes
@@ -133,10 +132,6 @@ export async function psu_foodcarts_routes(app: FastifyInstance): Promise<void> 
     Reply: IPostUsersResponse;
   }>("/foodcarts", async (req: any, reply: FastifyReply) => {
     const { name, hours, about, category } = req.body;
-
-    // Get file from request
-    const data = await req.file();
-    let upload = await UploadFileToMinio(data);
 
     const foodcart = new FoodCarts();
     foodcart.name = name;
