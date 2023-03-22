@@ -10,6 +10,7 @@ def get_db_connection():
     return conn
 
 @app.route("/reviews/<id>", methods=['GET'])
+@cross_origin()
 def get_reviews(id):
     conn = get_db_connection()
 
@@ -17,24 +18,19 @@ def get_reviews(id):
     cur = conn.cursor()
   
     # Select all products from the table
-    cur.execute('SELECT * FROM reviews WHERE "foodcartId" = ' + id)
-#     cur.execute('SELECT r.id, r.text, r.rating, u.id, u.name FROM reviews r '
-#     'INNER JOIN users u '
-#     'ON "r.userId" = "u.id" '
-#    'WHERE "r.foodcartId" = ' + id)
+    cur.execute('SELECT "reviews"."id", "reviews"."text", "reviews"."rating", "users"."id", "users"."name" '
+                'FROM reviews '
+                'INNER JOIN users ON "reviews"."userId" = "users"."id" '
+                'WHERE "reviews"."foodcartId" = ' + id)
 
     # Fetch the data
     data = cur.fetchall()
-    
-    cur.execute('SELECT * FROM users')
-
-    users = cur.fetchall()
   
     # close the cursor and connection
     cur.close()
     conn.close()
 
-    return {"results": data}
+    return {"reviews": data}
 
 
 if __name__ == '__main__':

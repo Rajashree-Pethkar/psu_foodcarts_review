@@ -2,8 +2,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import {Link, Route, Routes} from "react-router-dom";
 import FoodCarts from "./foodcarts";
 import Home from "./home";
-import LoginButton from "./login";
-import LogoutButton from "./logout";
 import Profile from "./profile";
 import AllReviews from "./reviews";
 
@@ -45,7 +43,7 @@ function AuthLinksView() {
 		<>
 			<Link to="/foodcarts">Foodcarts</Link>
 			<Link to="/profile">Your Profile</Link>
-			<Link to="" onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>Logout</Link>
+			<Link to="/" onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>Logout</Link>
 		</>
 	)
 }
@@ -55,7 +53,7 @@ function NoAuthLinksView() {
 
 	return (
 		<>
-			<Link to="" onClick={() => loginWithRedirect()}>Login</Link>
+			<Link to="/profile" onClick={() => loginWithRedirect()}>Login</Link>
 		</>
 	)
 }

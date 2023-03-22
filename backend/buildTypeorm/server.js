@@ -8,6 +8,9 @@ import { getDirName } from "./lib/helpers.js";
 import logger from "./lib/logger.js";
 import { psu_foodcarts_routes } from "./routes.js";
 import DbPlugin from "./plugins/database.js";
+import cors from "@fastify/cors";
+import dotenv from "dotenv";
+dotenv.config();
 /**
  * This is our main "Create App" function.  Note that it does NOT start the server, this only creates it
  * @function
@@ -24,6 +27,11 @@ export async function buildApp(useLogging) {
     try {
         // add express-like 'app.use' middleware support
         await app.register(fastifyMiddie);
+        await app.register(cors, {
+            origin: (origin, cb) => {
+                cb(null, true);
+            },
+        });
         // add static file handling
         await app.register(staticFiles, {
             root: path.join(getDirName(import.meta), "../public"),

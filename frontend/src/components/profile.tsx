@@ -37,7 +37,7 @@ function SendUserInformation({user, isAuthenticated}){
           })
           .then(function (response) {
             sessionStorage.setItem("user", response.data.user.id);
-            console.log(response.data.user.id);
+            console.log(response.data.user);
             //return response;
           })
           .catch(function (error) {

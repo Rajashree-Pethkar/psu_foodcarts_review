@@ -40,10 +40,10 @@ function FoodCart({foodcarts}) {
                     <div className="h4">
                       <ShowReviews name={fc.name} fc_id={fc.id}></ShowReviews>
                     </div>
-                    <div className="h6">{fc.rating}</div>
-                    <div className="h6">{fc.hours}</div>
-                    <div className="h6">{fc.category}</div>
-                    <div className="h6">{fc.about}</div>
+                    <div className="h6">Rating: {fc.rating}</div>
+                    <div className="h6">Hours: {fc.hours}</div>
+                    <div className="h6">Category: {fc.category}</div>
+                    <div className="h6">About: {fc.about}</div>
                   </div>
                 </li>
               ))}
