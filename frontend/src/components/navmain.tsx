@@ -5,6 +5,7 @@ import Home from "./home";
 import LoginButton from "./login";
 import LogoutButton from "./logout";
 import Profile from "./profile";
+import AllReviews from "./reviews";
 
 export function NavMain() {
 	return (
@@ -38,11 +39,13 @@ function PublicLinksView() {
 }
 
 function AuthLinksView() {
+	const { logout } = useAuth0();
+
 	return (
 		<>
 			<Link to="/foodcarts">Foodcarts</Link>
 			<Link to="/profile">Your Profile</Link>
-			<Link to="/logout">Logout</Link>
+			<Link to="" onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>Logout</Link>
 		</>
 	)
 }
@@ -61,10 +64,11 @@ function NavRoutes() {
 	return (
 		<Routes>
             <Route path="/" element={<Home/>}/>
-			<Route path="/login" element={<LoginButton/>}/>
-			<Route path="/logout" element={<LogoutButton/>}/>
+			{/* <Route path="/login" element={<LoginButton/>}/>
+			<Route path="/logout" element={<LogoutButton/>}/> */}
 			<Route path="/profile" element={<Profile/>}/>
-			<Route path="/foodcarts" element={<FoodCarts/>}/>
+			<Route path="/foodcarts/*" element={<FoodCarts/>}/>
+			<Route path="/reviews/:id" element={<AllReviews/>}/>
 		</Routes>
 	);
 }

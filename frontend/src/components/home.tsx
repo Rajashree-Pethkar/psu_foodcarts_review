@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 export default function Home() {
-  return (<div className='h-100 d-flex flex-column justify-content-center'>
+  return (<div className='h-100 d-flex flex-column justify-content-center text-center'>
       <Title/>
       <Subtitle/>
     </div>
