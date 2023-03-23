@@ -51,9 +51,14 @@ function AuthLinksView() {
 function NoAuthLinksView() {
 	const { loginWithRedirect } = useAuth0();
 
+	const handleOnclick = () => {
+		loginWithRedirect();
+		<Profile></Profile>
+	}
+
 	return (
 		<>
-			<Link to="/profile" onClick={() => loginWithRedirect()}>Login</Link>
+			<Link to="/profile" onClick={handleOnclick}>Login</Link>
 		</>
 	)
 }

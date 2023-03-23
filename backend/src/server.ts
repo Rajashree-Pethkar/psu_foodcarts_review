@@ -13,8 +13,6 @@ import cors from "@fastify/cors";
 import dotenv from "dotenv";
 dotenv.config();
 
-
-
 /**
  * This is our main "Create App" function.  Note that it does NOT start the server, this only creates it
  * @function

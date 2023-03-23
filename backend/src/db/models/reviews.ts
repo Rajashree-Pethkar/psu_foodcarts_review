@@ -1,16 +1,5 @@
 /** @module Models/Reviews */
-import {
-  BaseEntity,
-  Column,
-  CreateDateColumn,
-  Entity,
-  ManyToMany,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  Relation,
-  UpdateDateColumn,
-} from "typeorm";
+import TypeORM from "typeorm";
 import { FoodCarts } from "./foodcarts";
 import { ReviewImages } from "./reviewimages";
 import { ReviewReactions } from "./reviewreactions";
@@ -19,40 +8,43 @@ import { User } from "./user";
 /**
  *  Class representing reviews table
  */
-@Entity({ name: "reviews" })
-export class Reviews extends BaseEntity {
-  @PrimaryGeneratedColumn()
+@TypeORM.Entity({ name: "reviews" })
+export class Reviews extends TypeORM.BaseEntity {
+  @TypeORM.PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @TypeORM.Column()
   text: string;
 
-  @Column()
+  @TypeORM.Column()
   rating: number;
 
-  @ManyToOne((type) => User, (user: User) => user.reviews, {
+  @TypeORM.ManyToOne((type) => User, (user: User) => user.reviews, {
     cascade: true,
     onDelete: "CASCADE",
   })
-  user: Relation<User>;
+  user: TypeORM.Relation<User>;
 
-  @ManyToOne((type) => FoodCarts, (fc: FoodCarts) => fc.reviews, {
+  @TypeORM.ManyToOne((type) => FoodCarts, (fc: FoodCarts) => fc.reviews, {
     cascade: true,
     onDelete: "CASCADE",
   })
-  foodcart: Relation<FoodCarts>;
+  foodcart: TypeORM.Relation<FoodCarts>;
 
   // Review Images
-  @OneToMany((type) => ReviewImages, (r: ReviewImages) => r.review)
-  reviewimages: Relation<ReviewImages[]>;
+  @TypeORM.OneToMany((type) => ReviewImages, (r: ReviewImages) => r.review)
+  reviewimages: TypeORM.Relation<ReviewImages[]>;
 
   // Review Reactions
-  @OneToMany((type) => ReviewReactions, (r: ReviewReactions) => r.review)
-  reviewreactions: Relation<ReviewReactions[]>;
+  @TypeORM.OneToMany(
+    (type) => ReviewReactions,
+    (r: ReviewReactions) => r.review
+  )
+  reviewreactions: TypeORM.Relation<ReviewReactions[]>;
 
-  @CreateDateColumn()
+  @TypeORM.CreateDateColumn()
   created_at: string;
 
-  @UpdateDateColumn()
+  @TypeORM.UpdateDateColumn()
   updated_at: string;
 }

@@ -1,37 +1,27 @@
 /** @module Models/ReviewImages */
-import {
-  BaseEntity,
-  Column,
-  CreateDateColumn,
-  Entity,
-  ManyToMany,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-  Relation,
-  UpdateDateColumn,
-} from "typeorm";
+import TypeORM from "typeorm";
 import { Reviews } from "./reviews";
 
 /**
  *  Class representing review images table
  */
-@Entity({ name: "reviewimages" })
-export class ReviewImages extends BaseEntity {
-  @PrimaryGeneratedColumn()
+@TypeORM.Entity({ name: "reviewimages" })
+export class ReviewImages extends TypeORM.BaseEntity {
+  @TypeORM.PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @TypeORM.Column()
   image: string;
 
-  @ManyToOne((type) => Reviews, (r: Reviews) => r.reviewimages, {
+  @TypeORM.ManyToOne((type) => Reviews, (r: Reviews) => r.reviewimages, {
     cascade: true,
     onDelete: "CASCADE",
   })
-  review: Relation<Reviews>;
+  review: TypeORM.Relation<Reviews>;
 
-  @CreateDateColumn()
+  @TypeORM.CreateDateColumn()
   created_at: string;
 
-  @UpdateDateColumn()
+  @TypeORM.UpdateDateColumn()
   updated_at: string;
 }

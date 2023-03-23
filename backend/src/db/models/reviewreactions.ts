@@ -1,43 +1,34 @@
 /** @module Models/ReviewReactions */
-import {
-  BaseEntity,
-  Column,
-  CreateDateColumn,
-  Entity,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-  Relation,
-  UpdateDateColumn,
-} from "typeorm";
+import TypeORM from "typeorm";
 import { Reviews } from "./reviews";
 import { User } from "./user";
 
 /**
  *  Class representing review rections table
  */
-@Entity({ name: "reviewreactions" })
-export class ReviewReactions extends BaseEntity {
-  @PrimaryGeneratedColumn()
+@TypeORM.Entity({ name: "reviewreactions" })
+export class ReviewReactions extends TypeORM.BaseEntity {
+  @TypeORM.PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @TypeORM.Column()
   reaction: string;
 
-  @ManyToOne((type) => Reviews, (r: Reviews) => r.reviewreactions, {
+  @TypeORM.ManyToOne((type) => Reviews, (r: Reviews) => r.reviewreactions, {
     cascade: true,
     onDelete: "CASCADE",
   })
-  review: Relation<Reviews>;
+  review: TypeORM.Relation<Reviews>;
 
-  @ManyToOne((type) => User, (user: User) => user.reviewreactions, {
+  @TypeORM.ManyToOne((type) => User, (user: User) => user.reviewreactions, {
     cascade: true,
     onDelete: "CASCADE",
   })
-  user: Relation<User>;
+  user: TypeORM.Relation<User>;
 
-  @CreateDateColumn()
+  @TypeORM.CreateDateColumn()
   created_at: string;
 
-  @UpdateDateColumn()
+  @TypeORM.UpdateDateColumn()
   updated_at: string;
 }

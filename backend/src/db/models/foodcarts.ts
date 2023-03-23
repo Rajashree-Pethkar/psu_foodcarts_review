@@ -1,53 +1,41 @@
 /** @module Models/FoodCarts */
-import {
-  BaseEntity,
-  Column,
-  CreateDateColumn,
-  Double,
-  Entity,
-  ManyToMany,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  Relation,
-  UpdateDateColumn,
-} from "typeorm";
+import TypeORM from "typeorm";
 import { Reviews } from "./reviews";
 
 
 /**
  *  Class representing food carts table
  */
-@Entity({ name: "foodcarts" })
-export class FoodCarts extends BaseEntity {
-  @PrimaryGeneratedColumn()
+@TypeORM.Entity({ name: "foodcarts" })
+export class FoodCarts extends TypeORM.BaseEntity {
+  @TypeORM.PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @TypeORM.Column()
   name: string;
 
-  @Column()
+  @TypeORM.Column()
   hours: string;
 
-  @Column()
+  @TypeORM.Column()
   about: string;
 
-  @Column()
+  @TypeORM.Column()
   image: string;
 
-  @Column()
+  @TypeORM.Column()
   category: string;
 
-  @Column()
+  @TypeORM.Column()
   rating: string;
 
   // Reviews
-  @OneToMany((type) => Reviews, (r: Reviews) => r.foodcart)
-  reviews: Relation<Reviews[]>;
+  @TypeORM.OneToMany((type) => Reviews, (r: Reviews) => r.foodcart)
+  reviews: TypeORM.Relation<Reviews[]>;
 
-  @CreateDateColumn()
+  @TypeORM.CreateDateColumn()
   created_at: string;
 
-  @UpdateDateColumn()
+  @TypeORM.UpdateDateColumn()
   updated_at: string;
 }

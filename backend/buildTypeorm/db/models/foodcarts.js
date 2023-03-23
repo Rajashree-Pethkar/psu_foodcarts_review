@@ -8,12 +8,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 /** @module Models/FoodCarts */
-import { BaseEntity, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn, } from "typeorm";
+import TypeORM from "typeorm";
 import { Reviews } from "./reviews.js";
 /**
  *  Class representing food carts table
  */
-let FoodCarts = class FoodCarts extends BaseEntity {
+let FoodCarts = class FoodCarts extends TypeORM.BaseEntity {
     id;
     name;
     hours;
@@ -27,47 +27,47 @@ let FoodCarts = class FoodCarts extends BaseEntity {
     updated_at;
 };
 __decorate([
-    PrimaryGeneratedColumn(),
+    TypeORM.PrimaryGeneratedColumn(),
     __metadata("design:type", Number)
 ], FoodCarts.prototype, "id", void 0);
 __decorate([
-    Column(),
+    TypeORM.Column(),
     __metadata("design:type", String)
 ], FoodCarts.prototype, "name", void 0);
 __decorate([
-    Column(),
+    TypeORM.Column(),
     __metadata("design:type", String)
 ], FoodCarts.prototype, "hours", void 0);
 __decorate([
-    Column(),
+    TypeORM.Column(),
     __metadata("design:type", String)
 ], FoodCarts.prototype, "about", void 0);
 __decorate([
-    Column(),
+    TypeORM.Column(),
     __metadata("design:type", String)
 ], FoodCarts.prototype, "image", void 0);
 __decorate([
-    Column(),
+    TypeORM.Column(),
     __metadata("design:type", String)
 ], FoodCarts.prototype, "category", void 0);
 __decorate([
-    Column(),
+    TypeORM.Column(),
     __metadata("design:type", String)
 ], FoodCarts.prototype, "rating", void 0);
 __decorate([
-    OneToMany((type) => Reviews, (r) => r.foodcart),
+    TypeORM.OneToMany((type) => Reviews, (r) => r.foodcart),
     __metadata("design:type", Object)
 ], FoodCarts.prototype, "reviews", void 0);
 __decorate([
-    CreateDateColumn(),
+    TypeORM.CreateDateColumn(),
     __metadata("design:type", String)
 ], FoodCarts.prototype, "created_at", void 0);
 __decorate([
-    UpdateDateColumn(),
+    TypeORM.UpdateDateColumn(),
     __metadata("design:type", String)
 ], FoodCarts.prototype, "updated_at", void 0);
 FoodCarts = __decorate([
-    Entity({ name: "foodcarts" })
+    TypeORM.Entity({ name: "foodcarts" })
 ], FoodCarts);
 export { FoodCarts };
 //# sourceMappingURL=foodcarts.js.map

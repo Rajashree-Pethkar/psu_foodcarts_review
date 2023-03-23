@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 /** @module Models/Reviews */
-import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn, } from "typeorm";
+import TypeORM from "typeorm";
 import { FoodCarts } from "./foodcarts.js";
 import { ReviewImages } from "./reviewimages.js";
 import { ReviewReactions } from "./reviewreactions.js";
@@ -16,7 +16,7 @@ import { User } from "./user.js";
 /**
  *  Class representing reviews table
  */
-let Reviews = class Reviews extends BaseEntity {
+let Reviews = class Reviews extends TypeORM.BaseEntity {
     id;
     text;
     rating;
@@ -30,49 +30,49 @@ let Reviews = class Reviews extends BaseEntity {
     updated_at;
 };
 __decorate([
-    PrimaryGeneratedColumn(),
+    TypeORM.PrimaryGeneratedColumn(),
     __metadata("design:type", Number)
 ], Reviews.prototype, "id", void 0);
 __decorate([
-    Column(),
+    TypeORM.Column(),
     __metadata("design:type", String)
 ], Reviews.prototype, "text", void 0);
 __decorate([
-    Column(),
+    TypeORM.Column(),
     __metadata("design:type", Number)
 ], Reviews.prototype, "rating", void 0);
 __decorate([
-    ManyToOne((type) => User, (user) => user.reviews, {
+    TypeORM.ManyToOne((type) => User, (user) => user.reviews, {
         cascade: true,
         onDelete: "CASCADE",
     }),
     __metadata("design:type", Object)
 ], Reviews.prototype, "user", void 0);
 __decorate([
-    ManyToOne((type) => FoodCarts, (fc) => fc.reviews, {
+    TypeORM.ManyToOne((type) => FoodCarts, (fc) => fc.reviews, {
         cascade: true,
         onDelete: "CASCADE",
     }),
     __metadata("design:type", Object)
 ], Reviews.prototype, "foodcart", void 0);
 __decorate([
-    OneToMany((type) => ReviewImages, (r) => r.review),
+    TypeORM.OneToMany((type) => ReviewImages, (r) => r.review),
     __metadata("design:type", Object)
 ], Reviews.prototype, "reviewimages", void 0);
 __decorate([
-    OneToMany((type) => ReviewReactions, (r) => r.review),
+    TypeORM.OneToMany((type) => ReviewReactions, (r) => r.review),
     __metadata("design:type", Object)
 ], Reviews.prototype, "reviewreactions", void 0);
 __decorate([
-    CreateDateColumn(),
+    TypeORM.CreateDateColumn(),
     __metadata("design:type", String)
 ], Reviews.prototype, "created_at", void 0);
 __decorate([
-    UpdateDateColumn(),
+    TypeORM.UpdateDateColumn(),
     __metadata("design:type", String)
 ], Reviews.prototype, "updated_at", void 0);
 Reviews = __decorate([
-    Entity({ name: "reviews" })
+    TypeORM.Entity({ name: "reviews" })
 ], Reviews);
 export { Reviews };
 //# sourceMappingURL=reviews.js.map

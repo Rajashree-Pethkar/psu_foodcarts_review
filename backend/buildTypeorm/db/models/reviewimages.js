@@ -8,12 +8,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 /** @module Models/ReviewImages */
-import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn, } from "typeorm";
+import TypeORM from "typeorm";
 import { Reviews } from "./reviews.js";
 /**
  *  Class representing review images table
  */
-let ReviewImages = class ReviewImages extends BaseEntity {
+let ReviewImages = class ReviewImages extends TypeORM.BaseEntity {
     id;
     image;
     review;
@@ -21,30 +21,30 @@ let ReviewImages = class ReviewImages extends BaseEntity {
     updated_at;
 };
 __decorate([
-    PrimaryGeneratedColumn(),
+    TypeORM.PrimaryGeneratedColumn(),
     __metadata("design:type", Number)
 ], ReviewImages.prototype, "id", void 0);
 __decorate([
-    Column(),
+    TypeORM.Column(),
     __metadata("design:type", String)
 ], ReviewImages.prototype, "image", void 0);
 __decorate([
-    ManyToOne((type) => Reviews, (r) => r.reviewimages, {
+    TypeORM.ManyToOne((type) => Reviews, (r) => r.reviewimages, {
         cascade: true,
         onDelete: "CASCADE",
     }),
     __metadata("design:type", Object)
 ], ReviewImages.prototype, "review", void 0);
 __decorate([
-    CreateDateColumn(),
+    TypeORM.CreateDateColumn(),
     __metadata("design:type", String)
 ], ReviewImages.prototype, "created_at", void 0);
 __decorate([
-    UpdateDateColumn(),
+    TypeORM.UpdateDateColumn(),
     __metadata("design:type", String)
 ], ReviewImages.prototype, "updated_at", void 0);
 ReviewImages = __decorate([
-    Entity({ name: "reviewimages" })
+    TypeORM.Entity({ name: "reviewimages" })
 ], ReviewImages);
 export { ReviewImages };
 //# sourceMappingURL=reviewimages.js.map

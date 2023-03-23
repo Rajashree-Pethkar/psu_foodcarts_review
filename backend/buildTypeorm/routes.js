@@ -59,13 +59,13 @@ export async function psu_foodcarts_routes(app) {
      */
     app.post("/users", post_users_opts, async (req, reply) => {
         const { name, email, dob } = req.body;
-        const foundUser = await User.findOneOrFail({
+        const foundUser = await app.db.user.find({
             where: {
-                email: email,
-            },
+                email: email
+            }
         });
         let user = new User();
-        if (foundUser == null) {
+        if (foundUser.length == 0) {
             let { password } = req.body;
             user.name = name;
             user.email = email;
@@ -74,7 +74,7 @@ export async function psu_foodcarts_routes(app) {
             await app.db.user.save(user);
         }
         else {
-            user = foundUser;
+            user = foundUser[0];
         }
         //manually JSON stringify due to fastify bug with validation
         // https://github.com/fastify/fastify/issues/4017
@@ -154,24 +154,29 @@ export async function psu_foodcarts_routes(app) {
      */
     app.post("/reviews", async (req, reply) => {
         const { text, user, foodcart, rating } = req.body;
-        const users = await User.find({
+        const users = await app.db.user.find({
             where: {
                 id: user,
             },
         });
-        const fc = await FoodCarts.find({
+        const fc = await app.db.foodcarts.find({
             where: {
                 id: foodcart,
             },
         });
-        const existingReview = await Reviews.findOneOrFail({
+        const existingReview = await app.db.reviews.find({
+            relations: {
+                user: true,
+            },
             where: {
-                user: user,
+                user: {
+                    id: user.id
+                },
             },
         });
         let review = new Reviews();
-        if (existingReview != null) {
-            review = existingReview;
+        if (existingReview.length > 0) {
+            review = existingReview[0];
         }
         review.text = text;
         review.rating = rating;

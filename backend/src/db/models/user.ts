@@ -1,51 +1,42 @@
 /** @module Models/User */
-import {
-	BaseEntity,
-	Column,
-	CreateDateColumn,
-	Entity,
-	OneToMany,
-	PrimaryGeneratedColumn,
-	Relation,
-	UpdateDateColumn
-} from "typeorm";
+import TypeORM from "typeorm";
 import { ReviewReactions } from "./reviewreactions";
 import { Reviews } from "./reviews";
 
 /**
  *  Class representing user table
  */
-@Entity({ name: "users" })
-export class User extends BaseEntity {
-  @PrimaryGeneratedColumn()
+@TypeORM.Entity({ name: "users" })
+export class User extends TypeORM.BaseEntity {
+  @TypeORM.PrimaryGeneratedColumn()
   id: number;
 
-  @Column({
+  @TypeORM.Column({
     length: 100,
     type: "varchar",
   })
   name: string;
 
-  @Column("text")
+  @TypeORM.Column("text")
   email: string;
 
-  @Column()
+  @TypeORM.Column()
   password: string;
 
-  @Column()
+  @TypeORM.Column()
   dob: Date;
 
   // Reviews
-  @OneToMany((type) => Reviews, (r: Reviews) => r.user)
-  reviews: Relation<Reviews[]>;
+  @TypeORM.OneToMany((type) => Reviews, (r: Reviews) => r.user)
+  reviews: TypeORM.Relation<Reviews[]>;
 
   // Reviews
-  @OneToMany((type) => ReviewReactions, (r: ReviewReactions) => r.user)
-  reviewreactions: Relation<ReviewReactions[]>;
+  @TypeORM.OneToMany((type) => ReviewReactions, (r: ReviewReactions) => r.user)
+  reviewreactions: TypeORM.Relation<ReviewReactions[]>;
 
-  @CreateDateColumn()
+  @TypeORM.CreateDateColumn()
   created_at: string;
 
-  @UpdateDateColumn()
+  @TypeORM.UpdateDateColumn()
   updated_at: string;
 }

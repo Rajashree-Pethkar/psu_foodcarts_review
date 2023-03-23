@@ -11,7 +11,7 @@ services:
       - VITE_IP_ADDR=0.0.0.0
       - VITE_PORT=8080
       - VITE_LOGS_DIR=logs/
-      - VITE_DB_PORT=5433
+      - VITE_DB_PORT=5432
       - VITE_DB_USER=rajashree
       - VITE_DB_PASS=rajashree
       - VITE_DB_NAME=psu_foodcarts
@@ -27,24 +27,26 @@ services:
     environment:
       - VITE_BACKEND_IP=backend
       - VITE_BACKEND_PORT=8080
+      - VITE_MICROSERVICE_IP=127.0.0.1
+      - VITE_MICROSERVICE_PORT=80
 
   microservice:
     container_name: microservice
     build: ./microservice/
     restart: always
     ports:
-      - "3333:3333"
+      - "80:80"
     environment:
-      - DATABASE_URL=postgres://rajashree:rajashree@postgres/psu_foodcarts
+      - DATABASE_URL=postgres://rajashree:rajashree@postgres:5432/psu_foodcarts
     depends_on: #This is a lie
       - postgres
-
+  
   postgres:
     container_name: psu_foodcarts
     image: postgres:15-alpine
     restart: always
     ports:
-      - "5433:5432" 
+      - "5432:5432" 
     volumes:
       - db:/var/lib/postgresql/data
     environment:

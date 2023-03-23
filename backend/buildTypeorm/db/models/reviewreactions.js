@@ -8,13 +8,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 /** @module Models/ReviewReactions */
-import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn, } from "typeorm";
+import TypeORM from "typeorm";
 import { Reviews } from "./reviews.js";
 import { User } from "./user.js";
 /**
  *  Class representing review rections table
  */
-let ReviewReactions = class ReviewReactions extends BaseEntity {
+let ReviewReactions = class ReviewReactions extends TypeORM.BaseEntity {
     id;
     reaction;
     review;
@@ -23,37 +23,37 @@ let ReviewReactions = class ReviewReactions extends BaseEntity {
     updated_at;
 };
 __decorate([
-    PrimaryGeneratedColumn(),
+    TypeORM.PrimaryGeneratedColumn(),
     __metadata("design:type", Number)
 ], ReviewReactions.prototype, "id", void 0);
 __decorate([
-    Column(),
+    TypeORM.Column(),
     __metadata("design:type", String)
 ], ReviewReactions.prototype, "reaction", void 0);
 __decorate([
-    ManyToOne((type) => Reviews, (r) => r.reviewreactions, {
+    TypeORM.ManyToOne((type) => Reviews, (r) => r.reviewreactions, {
         cascade: true,
         onDelete: "CASCADE",
     }),
     __metadata("design:type", Object)
 ], ReviewReactions.prototype, "review", void 0);
 __decorate([
-    ManyToOne((type) => User, (user) => user.reviewreactions, {
+    TypeORM.ManyToOne((type) => User, (user) => user.reviewreactions, {
         cascade: true,
         onDelete: "CASCADE",
     }),
     __metadata("design:type", Object)
 ], ReviewReactions.prototype, "user", void 0);
 __decorate([
-    CreateDateColumn(),
+    TypeORM.CreateDateColumn(),
     __metadata("design:type", String)
 ], ReviewReactions.prototype, "created_at", void 0);
 __decorate([
-    UpdateDateColumn(),
+    TypeORM.UpdateDateColumn(),
     __metadata("design:type", String)
 ], ReviewReactions.prototype, "updated_at", void 0);
 ReviewReactions = __decorate([
-    Entity({ name: "reviewreactions" })
+    TypeORM.Entity({ name: "reviewreactions" })
 ], ReviewReactions);
 export { ReviewReactions };
 //# sourceMappingURL=reviewreactions.js.map

@@ -1,3 +1,4 @@
+from os import environ
 from flask import Flask
 import psycopg2
 from flask_cors import CORS, cross_origin
@@ -6,7 +7,8 @@ app = Flask(__name__)
 CORS(app)
 
 def get_db_connection():
-    conn = psycopg2.connect("postgres://rajashree:rajashree@localhost:5433/psu_foodcarts") 
+    DB_URL = environ.get('DATABASE_URL')
+    conn = psycopg2.connect(DB_URL) 
     return conn
 
 @app.route("/reviews/<id>", methods=['GET'])
@@ -31,8 +33,3 @@ def get_reviews(id):
     conn.close()
 
     return {"reviews": data}
-
-
-if __name__ == '__main__':
-    app.debug = True
-    app.run()

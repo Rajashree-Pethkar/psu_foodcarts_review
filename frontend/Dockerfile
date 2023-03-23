@@ -5,6 +5,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get autoclean -y && apt-get auto
 RUN npm install -g pnpm
 
 WORKDIR /app
+
 COPY ./nginx.conf /nginx.conf
 COPY package*.json /app/
 
